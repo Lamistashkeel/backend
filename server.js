@@ -7,43 +7,21 @@ dotenv.config();
 
 const app = express();
 
-// CORS configuration for production
-const allowedOrigins = [
-  'http://localhost:5173',
-  'http://localhost:3000',
-  process.env.FRONTEND_URL // Will add this in Railway
-];
-
-
-app.use(cors({
-  origin: function(origin, callback) {
-    // Allow requests with no origin (mobile apps, Postman, etc.)
-    if (!origin) return callback(null, true);
-    if (allowedOrigins.indexOf(origin) === -1) {
-      return callback(null, true); // For now, allow all
-    }
-    return callback(null, true);
-  },
-  credentials: true
-}));
-
+// Middleware
+app.use(cors());
 app.use(express.json());
 
+// MongoDB Connection
 mongoose.connect(process.env.MONGODB_URI)
 .then(() => console.log('✅ MongoDB Connected'))
 .catch(err => console.error('❌ MongoDB Connection Error:', err));
 
-// Test route
+// Test route - ROOT ROUTE ✅
 app.get('/', (req, res) => {
   res.json({ message: 'Finance Tracker API is running! 🚀' });
 });
 
-// Your existing routes
-app.use('/api/auth', require('./routes/auth'));
-// ... rest of routes
-
-
-// Routes
+// API Routes
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/expenses', require('./routes/expenses'));
 app.use('/api/categories', require('./routes/categories'));
