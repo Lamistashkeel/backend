@@ -11,7 +11,7 @@ const app = express();
 const allowedOrigins = [
   'http://localhost:5173',
   'http://localhost:3000',
-  'https://finance-tracker-frontend.vercel.app', // Add your Vercel URL
+  'https://finance-tracker-frontend-seven-rho.vercel.app/',
   'https://*.vercel.app' // Allow all Vercel preview deployments
 ];
 
